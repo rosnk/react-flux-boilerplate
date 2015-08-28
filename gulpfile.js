@@ -28,7 +28,7 @@ gulp.task('coffee', function(){
 
 
 gulp.task('browserify', function() {
-    // Single entry point to browserify 
+    // Single entry point to browserify
     gulp.src(jsSources)
         .pipe(browserify({
           transform: 'reactify'
@@ -39,7 +39,7 @@ gulp.task('browserify', function() {
 });
 
 gulp.task('compass', function() {
-    // Single entry point to browserify 
+    // Single entry point to browserify
     gulp.src('src/css/style.scss')
        .pipe(compass({
        		sass: 'src/css',
@@ -52,9 +52,11 @@ gulp.task('compass', function() {
 });
 
 gulp.task('copy', function() {
-    // Single entry point to browserify 
+    // Single entry point to browserify
     gulp.src('src/index.html')
         .pipe(gulp.dest('dist'))
+    gulp.src('src/images/**/*.*')
+        .pipe(gulp.dest('dist/images'))
         .pipe(connect.reload())
 });
 
@@ -63,15 +65,17 @@ gulp.task('watch', function() {
     gulp.watch('src/js/coffee/**/*.*', ['coffee']);
     gulp.watch(jsSources, ['browserify']);
     gulp.watch('src/css/**/*.*', ['compass']);
+    gulp.watch('src/js/**/*.*', ['browserify'] );
 
 });
 
+
 gulp.task('connect', function() {
-	gulp.server({
+	connect.server({
 		root: 'dist/',
 		livereload: true
-	});
-    
+	})
+
 
 });
 
